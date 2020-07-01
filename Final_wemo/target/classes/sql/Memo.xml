@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  SQL 맵퍼 파일은 xml이기 때문에 제일 먼저 xml 선언이 옵니다. -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="Memoes">
+
+
+	<insert id="firstinsert" parameterType="memo">
+		<selectKey resultType="int"  order="BEFORE"
+			keyProperty="MEMO_NUM">
+			select nvl(max(MEMO_NUM),0)+1 from memo where USER_EMAIL=#{USER_EMAIL}
+			</selectKey>
+	insert into memo
+		values(#{USER_EMAIL},#{MEMO_NUM},#{MEMO_SUB},#{MEMO_POSITION},
+				#{MEMO_TOP},#{MEMO_LEFT},#{MEMO_COLOR},#{MEMO_ZIN},#{MEMO_WIDTH},#{MEMO_HEIGHT},
+				#{MEMO_TEX},sysdate,sysdate,#{MEMO_TEX},#{MEMO_FAV},#{MEMO_LOC})	
+	</insert>
+	
+	<insert id="newinsert" parameterType="memo">
+		<selectKey resultType="int"  order="BEFORE"
+			keyProperty="MEMO_NUM">
+			select nvl(max(MEMO_NUM),0)+1 from memo where USER_EMAIL=#{USER_EMAIL}
+			</selectKey>			
+		insert into memo
+		values(#{USER_EMAIL},#{MEMO_NUM},#{MEMO_SUB},#{MEMO_POSITION},
+				#{MEMO_TOP},#{MEMO_LEFT},#{MEMO_COLOR},#{MEMO_ZIN},#{MEMO_WIDTH},#{MEMO_HEIGHT},
+				#{MEMO_TEX},sysdate,sysdate,#{PREV_TEX},#{MEMO_FAV},#{MEMO_LOC})	
+	</insert>
+	
+	
+	<update id="updatememo" parameterType="memo">
+		<selectKey resultType="string"  order="BEFORE"
+			keyProperty="MEMO_PRE">
+			select MEMO_TEX from memo where MEMO_NUM=#{MEMO_NUM}
+			</selectKey>
+		update memo
+		by 	MEMO_SUB=#{MEMO_SUB},MEMO_POSITION=#{MEMO_POSITION},
+			MEMO_TOP=#{MEMO_TOP},MEMO_LEFT=#{MEMO_LEFT},
+			MEMO_COLOR=#{MEMO_COLOR},MEMO_ZIN=#{MEMO_ZIN},
+			MEMO_TEX=#{MEMO_TEX},PREV_TEX=#{PREV_TEX},MEMO_PRE=sysdate,
+			MEMO_FAV=#{MEMO_FAV},MEMO_LOC=#{MEMO_LOC}			
+			where MEMO_NUM=#{MEMO_NUM}	
+	</update>
+	
+	
+	
+	<select id="selectstudy" parameterType="member" resultType="memo">
+		select * from memo
+			 where MEMO_SUB='STUDY' AND USER_EMAIL=#{USER_EMAIL}
+	</select>
+	
+	<select id="selctmoney"  parameterType="member" resultType="memo">
+		select * from memo
+			where MEMO_SUB='MONEY' AND USER_EMAIL=#{USER_EMAIL}
+	</select>
+	
+	<select id="selcthealth"  parameterType="member" resultType="memo">
+		select * from memo
+			where MEMO_SUB='HEALTH' AND USER_EMAIL=#{USER_EMAIL}
+	</select>
+	
+	
+	
+	
+	
+</mapper>
