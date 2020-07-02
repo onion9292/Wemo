@@ -140,7 +140,7 @@
 
                 <div class="col-lg-6">
                     <label for="calendar_view">êµ¬ë¶ë³</label>
-                    <div class="input-group">
+                    <div class="input-group">  
                         <select class="filter" id="type_filter" multiple="multiple">
                             <option value="ì¹´íê³ ë¦¬1">ì¹´íê³ ë¦¬1</option>
                             <option value="ì¹´íê³ ë¦¬2">ì¹´íê³ ë¦¬2</option>
