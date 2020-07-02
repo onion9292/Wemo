@@ -33,26 +33,7 @@ public class AjaxController {
 	@Autowired
 	MemberDAO memberdao;
 	
-	@ResponseBody
-	@RequestMapping("/studyNew")
-	public void newStudy(Memo memo){//memo 에서 study 넣기
-		
-		memodao.newInsert(memo);
-	}
-	
-	@ResponseBody
-	@RequestMapping("/moneyNew")
-	public void newMoney(Memo memo){
-		
-		memodao.newInsert(memo);
-	}
-	
-	@ResponseBody
-	@RequestMapping("/healthNew")
-	public void newHealth(Memo memo){
-		
-		memodao.newInsert(memo);
-	}
+
 	
 	@ResponseBody
 	@RequestMapping("/getStudy")
@@ -75,11 +56,7 @@ public class AjaxController {
 		return memodao.selectHealth(member);
 		
 	}
-	
-	@GetMapping("/join")
-	public String join() {
-		return "join";
-	}
+
 	
 	@RequestMapping(value = "/login.net", method = RequestMethod.GET)
 	public String home() {
@@ -176,11 +153,7 @@ public class AjaxController {
 			mv.setViewName("wemo_main");
 		return mv;
 	}
-	
-	@RequestMapping(value = "/Main",method = RequestMethod.GET)
-	public String index2() {
-		return "wemo_main";
-	}
+
 	
 	
 	@PostMapping(value="/joinProcess")
