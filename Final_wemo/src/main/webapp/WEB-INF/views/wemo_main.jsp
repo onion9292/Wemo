@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%><!DOCTYPE html>
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 
@@ -198,6 +200,8 @@
                     "border-collapse" : "collapse",
                     "border-radius" : "0% 0% 5% 5%"
                 })
+                
+                //이 부분 만들어졌을 시 선택된 nav 영역 클릭시 메모 생성 및 $('#subject').text() = this.text();(선택한 text 입력)
                 })
             }
         })
@@ -243,6 +247,7 @@
                 .mouseup(adjustMemoboxzindex)                     
                 .mousedown(function(e){
                     $(this).css("z-index", 1000);
+                    // mousedown 했을 때 ajax를 통해서 memo 위치값 update
                 }) // mousedown end
 
             $('.memotext').keydown(autoResizeTextArea);
@@ -261,7 +266,13 @@
 
             // 새 메모를 메모 컨테이너에 생성하는 newMemoAppend() 함수
             function newMemoAppend(){
-
+            	 var user = $('#user').text();
+           		 
+            	 var sub = $('#subject').text();
+            	 var random = Math.random()*10;
+            	 var top = random*40;
+            	 var left = random*60;
+            	 var zind =1000;
                 var recommendContainer = "<div class = 'container recommend draggable' >"
                     + "<span>혹시 메모의 내용이 이것인가요?</span>"
                     + "<span class='material-icons close'> close </span><br>"
@@ -270,7 +281,7 @@
                     + "<button type = button class = 'btn btn-outline-warning homework'>숙제</button>"
                     + "<button type = button class = 'btn btn-outline-warning meeting'>회의 일정</button></div>";
 
-                var style = 'left: 100px; top: 100px; z-index: 1000;'
+                var style = 'left: '+left+'px; top: '+top+'px; z-index: '+zind+';'
 
                 var newMemobox = "<div class = 'container memobox shadow-sm' style = "+style+"><form>"
                     + "<div class = 'container memo-top'><span class = 'date'>" + today
@@ -313,8 +324,26 @@
                     .mouseup(adjustMemoboxzindex)
                     .mousedown(bringFront) // mousedown end
                     .css("position", "absolute")
-                adjustMemoboxzindex();
-            }
+                
+                
+                $.ajax({//메모 생성시 DB에 넣음
+					url:"newMemo",
+					data :{
+						"USER_EMAIL" : user,
+						"MEMO_SUB" : sub,
+						"MEMO_TOP" : top+"px",
+						"MEMO_LEFT" : left+"px",
+						"MEMO_ZIN" : zind
+					},
+					success : function(){
+						adjustMemoboxzindex();//다른 메모들의 z-index : -1씩;
+					}
+             		
+             		
+             	})//새로운 메모 만들시 DB에 메모 insert
+             };
+
+            
 
         function telFormAdd() {
                 var memoContent = $(this).parent().next();
@@ -500,6 +529,8 @@
 
 <body>
     <nav>
+      <div style="display:none" id="user">${USER_EMAIL }</div>
+        <div  style="display:none" id="subject">${USER_SUB }</div>
         <table class="table navTable">
             <tbody>
                 <tr class="first-row">
@@ -521,86 +552,23 @@
     </nav>
     <!-- 메모장 컨테이너 시작 -->
     <div class="memoContainer">
-        <!-- 컨테이너 내 첫번째 메모박스 -->
-        <!-- 메모박스의 위치 지정은 여기서 style로 주면 위치가 지정됨 예시 ↓ -->
-        <div class='container memobox shadow-sm' style = "position: absolute; left: 5px; top: 80px; z-index: 120">
-            <form>
-                <!-- 메모박스 상단 메뉴(날짜, 카테고리, 아이콘들) -->
-                <div class='container memo-top'>
-                    <span class="date"></span>
-                    <span class="section-name">공부</span>
-                    <span class="material-icons delete float-right">delete</span>
-                    <span class='material-icons float-right favorites'>stars</span>
-                    <span class="material-icons float-right lock">lock_open</span>
-                </div>
-                <!-- 메모박스 내 추천상자 -->
-                <div class='container recommend'>
-                    <span>혹시 메모의 내용이 이것인가요?</span>
-                    <span class='material-icons close'> close </span>
-                    <br>
-                    <button type=button class='btn btn-outline-warning tel'>전화번호</button>
-                    &nbsp;
-                    <button type=button class='btn btn-outline-warning todo'>할 일</button>
-                    <button type=button class='btn btn-outline-warning homework'>숙제</button>
-                    <button type=button class='btn btn-outline-warning meeting'>회의 일정</button>
-                </div>
-                <!-- 메모박스 내 메모 컨텐츠 -->
-                <div class='container memoContent'>
-                <!-- 이 자리에 textarea 삽입됨 -->
-                </div>
+      <c:forEach var ="memo" items="${memolist }"> 
+   		<div class = 'section section-${memo.MEMO_SUB }' >
+        <form>
+        	<div class = 'container memobox shadow-sm' style=" position : ${memo.MEMO_POSITION} ; top:${memo.MEMO_TOP}; left:${memo.MEMO_LEFT}; z-index:${memo.MEMO_ZIN}">
+            <div class = 'container memo-top'>
+                <span class = "date"></span>
+                <span class = "section-name" style="display:none">${memo.MEMO_SUB }</span>
+                <span class = "material-icons delete float-right">delete</span>
+                <span class = 'material-icons float-right favorites'>stars</span>
+                <span class = "material-icons float-right lock">lock_open</span>                
+            </div>
+            <div class="container memoSubject">${memo.MEMO_SUB }</div>                       
+            <div class = 'container memoContent'>${memo.MEMO_TEX }</div>
+            </div>
             </form>
         </div>
-
-        <div class='container memobox shadow-sm' style = "position: absolute; left: 352px; top: 92px; z-index: 13">
-            <form>
-                <div class='container memo-top'>
-                    <span class="date"></span>
-                    <span class="section-name">운동</span>
-                    <span class='material-icons delete float-right'>delete</span>
-                    <span class='material-icons float-right favorites'>stars</span>
-                    <span class="material-icons float-right lock">lock_open</span>
-                </div>
-                <div class='container recommend'>
-                    <span>혹시 메모의 내용이 이것인가요?</span>
-                    <span class='material-icons close'> close </span>
-                    <br>
-                    <button type=button class='btn btn-outline-warning tel'>전화번호</button>
-                    &nbsp;
-                    <button type=button class='btn btn-outline-warning todo'>할 일</button>
-                    <button type=button class='btn btn-outline-warning homework'>숙제</button>
-                    <button type=button class='btn btn-outline-warning meeting'>회의 일정</button>
-                </div>
-                <div class='container memoContent'>
-
-                </div>
-            </form>
-        </div>
-
-        <div class='container memobox shadow-sm' style = "position: absolute; left: 85px; top: 852px; z-index: 140">
-            <form>
-                <div class='container memo-top'>
-                    <span class="date"></span>
-                    <span class="section-name">가계부</span>
-                    <span class="material-icons delete float-right">delete</span>
-                    <span class='material-icons float-right favorites'>stars</span>
-                    <span class="material-icons float-right lock">lock_open</span>
-                </div>
-                <div class='container recommend'>
-                    <span>혹시 메모의 내용이 이것인가요?</span>
-                    <span class='material-icons close'> close </span>
-
-                    <br>
-                    <button type=button class='btn btn-outline-warning tel'>전화번호</button>
-                    &nbsp;
-                    <button type=button class='btn btn-outline-warning todo'>할 일</button>
-                    <button type=button class='btn btn-outline-warning homework'>숙제</button>
-                    <button type=button class='btn btn-outline-warning meeting'>회의 일정</button>
-                </div>
-                <div class='container memoContent'>
-
-                </div>
-            </form>
-        </div>
+        </c:forEach>
     </div>
     
 </body>

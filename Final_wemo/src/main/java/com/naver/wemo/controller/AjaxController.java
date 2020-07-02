@@ -128,7 +128,7 @@ public class AjaxController {
 			
 			out.println("alert('환영합니다! "+member.getUSER_EMAIL()+"님');");
 			out.println("");
-			out.println("location.href='Main?USER_EMAIL="+id+"'");
+			out.println("location.href='memo?USER_EMAIL="+id+"'");
 			out.println("</script>");
 			out.close();
 
@@ -173,7 +173,7 @@ public class AjaxController {
 			
 			mv.addObject("USER_SUB", lastsection);
 			mv.addObject("memolist", memolist);
-			mv.setViewName("memo");
+			mv.setViewName("wemo_main");
 		return mv;
 	}
 	
