@@ -128,7 +128,7 @@ public class AjaxController {
 			
 			out.println("alert('환영합니다! "+member.getUSER_EMAIL()+"님');");
 			out.println("");
-			out.println("location.href='memo?USER_EMAIL="+id+"'");
+			out.println("location.href='Main?USER_EMAIL="+id+"'");
 			out.println("</script>");
 			out.close();
 
@@ -158,7 +158,7 @@ public class AjaxController {
 		Member mem = memberdao.isId(member);//아이디 받아오기
 		List<Memo> memolist = new ArrayList<Memo>();
 		String lastsection = mem.getUSER_SUB();
-		System.out.println("여기?0");
+		
 			if(lastsection.equals("STUDY")) {
 				
 				memolist =memodao.selectStudy(mem);
@@ -177,7 +177,7 @@ public class AjaxController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/toMain",method = RequestMethod.GET)
+	@RequestMapping(value = "/Main",method = RequestMethod.GET)
 	public String index2() {
 		return "wemo_main";
 	}
@@ -228,6 +228,8 @@ public class AjaxController {
 	public void newMemo(Memo memo) {
 		memodao.newInsert(memo);
 	}
+	
+
 	
 	
 	

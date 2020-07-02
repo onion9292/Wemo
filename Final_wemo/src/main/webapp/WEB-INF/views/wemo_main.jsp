@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%><!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%><!DOCTYPE html>
 <html lang="ko">
 <head>
 
@@ -130,13 +130,13 @@
                 var normalNav = '<table class="table navTable">'
                               + '<tbody><tr class="first-row">'
                               +  '<td>WeMo</td>'
-                              +  '<td class="bg-primary">°øºÎ</td>'
-                              +  '<td class="bg-warning">¿îµ¿</td>'
-                              +  '<td class="bg-success">°¡°èºÎ</td>'
-                              +  '<td class="bg-danger">Ä¶¸°´õ</td>'
-                              +  '<td class="bg-secondary">º¸°üµÈ ¸Þ¸ð</td>'
-                              +  '<td class="bg-dark trash">ÈÞÁöÅë</td>'
-                              +  '<td class="bg-info">Åë°è</td>'
+                              +  '<td class="bg-primary">ê³µë¶€</td>'
+                              +  '<td class="bg-warning">ìš´ë™</td>'
+                              +  '<td class="bg-success">ê°€ê³„ë¶€</td>'
+                              +  '<td class="bg-danger">ìº˜ë¦°ë”</td>'
+                              +  '<td class="bg-secondary">ë³´ê´€ëœ ë©”ëª¨</td>'
+                              +  '<td class="bg-dark trash">íœ´ì§€í†µ</td>'
+                              +  '<td class="bg-info">í†µê³„</td>'
                               +  '<td class="bg-search">'
                               + '<span class="material-icons float-right" '
                               + 'style = "line-height: 24pt;">search<span>&nbsp;'
@@ -152,15 +152,15 @@
                               + '<span class="togglebtn material-icons float-right">list</span></td></tr></thead>'
                               + '<tbody id = "mobile-tbody">'
                               + '<tr class="mobile-row">'
-                              + '<td class="bg-primary">°øºÎ</td>'
-                              + '<td class="bg-warning">¿îµ¿</td>'
-                              + '<td class="bg-success">°¡°èºÎ</td></tr>'
+                              + '<td class="bg-primary">ê³µë¶€</td>'
+                              + '<td class="bg-warning">ìš´ë™</td>'
+                              + '<td class="bg-success">ê°€ê³„ë¶€</td></tr>'
                               + '<tr class="mobile-row">'
-                              + '<td class="bg-danger">Ä¶¸°´õ</td>'
-                              + '<td class="bg-secondary">º¸°üµÈ ¸Þ¸ð</td>'
-                              + '<td class="bg-dark trash">ÈÞÁöÅë</td></tr>'
+                              + '<td class="bg-danger">ìº˜ë¦°ë”</td>'
+                              + '<td class="bg-secondary">ë³´ê´€ëœ ë©”ëª¨</td>'
+                              + '<td class="bg-dark trash">íœ´ì§€í†µ</td></tr>'
                               + '<tr class="mobile-row">'
-                              + '<td class="bg-info">Åë°è</td>'
+                              + '<td class="bg-info">í†µê³„</td>'
                               + '<td class="bg-search" colspan = "2">'
                               + '<span class="material-icons float-right"'
                               + ' style = "line-height: 24pt;">search<span>&nbsp;'
@@ -203,7 +203,7 @@
         })
         }
         
-            /* ¿À´Ã ³¯Â¥ »ý¼ºÇØ¼­ date Å¬·¡½º°¡ ÀÖ´Â span ÅÂ±×¿¡ »ðÀÔ */
+            /* ì˜¤ëŠ˜ ë‚ ì§œ ìƒì„±í•´ì„œ date í´ëž˜ìŠ¤ê°€ ìžˆëŠ” span íƒœê·¸ì— ì‚½ìž… */
             var date = new Date();
             if (date.getMonth() + 1 < 10)
                 var month = "0" + (date.getMonth() + 1);
@@ -213,23 +213,23 @@
 
             $('.date').text(today);
 
-             /* newMemo(³×ºñ°ÔÀÌ¼Ç ¹Ù ³»¿¡ °øºÎ/¿îµ¿/Ä¶¸°´õ ÅÇ)Å¬¸¯½Ã »õ ¸Þ¸ð¸¦ »ý¼º */
+             /* newMemo(ë„¤ë¹„ê²Œì´ì…˜ ë°” ë‚´ì— ê³µë¶€/ìš´ë™/ìº˜ë¦°ë” íƒ­)í´ë¦­ì‹œ ìƒˆ ë©”ëª¨ë¥¼ ìƒì„± */
             $('.newMemo').on('click', newMemoAppend);
 
-             /* Ã³À½ µé¾î¿ÔÀ» ¶§ ÆäÀÌÁö¿¡ Á¸ÀçÇÏ´Â ¸ðµç ¸Þ¸ð¿¡ ÀÌº¥Æ® ºÎ¿© */
+             /* ì²˜ìŒ ë“¤ì–´ì™”ì„ ë•Œ íŽ˜ì´ì§€ì— ì¡´ìž¬í•˜ëŠ” ëª¨ë“  ë©”ëª¨ì— ì´ë²¤íŠ¸ ë¶€ì—¬ */
             $('.close').on('click', recomCloseEventAdd);
             $('.lock').on('click', lockEventAdd);
             $('.favorites').on('click', favoEventAdd);           
             $('.delete').on('click', deleteEventAdd);
 
-             /* ¸Þ¸ð¹Ú½º¸¦ µå·¡±×°¡ °¡´ÉÇÑ °´Ã¼·Î º¯°æÇÏ´Â ÇÔ¼ö draggable() @jQueryUI.js */
+             /* ë©”ëª¨ë°•ìŠ¤ë¥¼ ë“œëž˜ê·¸ê°€ ê°€ëŠ¥í•œ ê°ì²´ë¡œ ë³€ê²½í•˜ëŠ” í•¨ìˆ˜ draggable() @jQueryUI.js */
             $('.memobox').draggable()
                 .resizable({
                     minWidth: 200,
                     maxWidth: 500,
                     minHeight: 130
                 })
-                 /* ¸Þ¸ð ¸®»çÀÌÁî °¡´ÉÇÑ ÃÖ¼ÒÄ¡ ÃÖ´ëÄ¡ ¼³Á¤ */
+                 /* ë©”ëª¨ ë¦¬ì‚¬ì´ì¦ˆ ê°€ëŠ¥í•œ ìµœì†Œì¹˜ ìµœëŒ€ì¹˜ ì„¤ì • */
                 .resize(function (e) {
                     var memoWidth = $(this).width();
                     var memoHeight = $(this).height();
@@ -237,9 +237,9 @@
                         $(this).children().children().next().css("display", "none");
                     } 
                 })
-                 /* ¸Þ¸ð¹Ú½º°¡ ³Ê¹« ÀÛ¾ÆÁö¸é ÃßÃµÃ¢ÀÌ ÀÚµ¿À¸·Î »ç¶óÁöµµ·Ï ¼³°è */
+                 /* ë©”ëª¨ë°•ìŠ¤ê°€ ë„ˆë¬´ ìž‘ì•„ì§€ë©´ ì¶”ì²œì°½ì´ ìžë™ìœ¼ë¡œ ì‚¬ë¼ì§€ë„ë¡ ì„¤ê³„ */
                 .one('click', addTextArea)
-                 /* ¸Þ¸ð¹Ú½º ³»¿¡ »ðÀÔµÇ´Â textarea´Â ´Ü ÇÑ ¹ø¸¸ ½ÇÇàµÇµµ·Ï on()ÀÌ ¾Æ´Ñ one()À¸·Î ÀÌº¥Æ® ºÎ¿© */
+                 /* ë©”ëª¨ë°•ìŠ¤ ë‚´ì— ì‚½ìž…ë˜ëŠ” textareaëŠ” ë‹¨ í•œ ë²ˆë§Œ ì‹¤í–‰ë˜ë„ë¡ on()ì´ ì•„ë‹Œ one()ìœ¼ë¡œ ì´ë²¤íŠ¸ ë¶€ì—¬ */
                 .mouseup(adjustMemoboxzindex)                     
                 .mousedown(function(e){
                     $(this).css("z-index", 1000);
@@ -248,7 +248,7 @@
             $('.memotext').keydown(autoResizeTextArea);
             $('.memotext').focusout(memoOutResize);
 
-             /* ÃßÃµ¹Ú½º ³»¿¡ ÀÖ´Â ÅÂ±×¿¡ °¢°¢ Æû ±¸Çö -> ¼öÁ¤¿¹Á¤ */
+             /* ì¶”ì²œë°•ìŠ¤ ë‚´ì— ìžˆëŠ” íƒœê·¸ì— ê°ê° í¼ êµ¬í˜„ -> ìˆ˜ì •ì˜ˆì • */
             $('.tel').on('click', telFormAdd)
             $('.todo').on('click', todoFormAdd)
             $('.homework').on('click', homeworkFormAdd)
@@ -257,18 +257,18 @@
             
 
 
-            /* UI ÀÛ¾÷ ³¡³ª°í ¿©±â¼­ºÎÅÍ °¢ °³Ã¼¿¡ Àû¿ëÇÏ´Â ÇÔ¼öµé Á¤ÀÇ */
+            /* UI ìž‘ì—… ëë‚˜ê³  ì—¬ê¸°ì„œë¶€í„° ê° ê°œì²´ì— ì ìš©í•˜ëŠ” í•¨ìˆ˜ë“¤ ì •ì˜ */
 
-            // »õ ¸Þ¸ð¸¦ ¸Þ¸ð ÄÁÅ×ÀÌ³Ê¿¡ »ý¼ºÇÏ´Â newMemoAppend() ÇÔ¼ö
+            // ìƒˆ ë©”ëª¨ë¥¼ ë©”ëª¨ ì»¨í…Œì´ë„ˆì— ìƒì„±í•˜ëŠ” newMemoAppend() í•¨ìˆ˜
             function newMemoAppend(){
 
                 var recommendContainer = "<div class = 'container recommend draggable' >"
-                    + "<span>È¤½Ã ¸Þ¸ðÀÇ ³»¿ëÀÌ ÀÌ°ÍÀÎ°¡¿ä?</span>"
+                    + "<span>í˜¹ì‹œ ë©”ëª¨ì˜ ë‚´ìš©ì´ ì´ê²ƒì¸ê°€ìš”?</span>"
                     + "<span class='material-icons close'> close </span><br>"
-                    + "<button type = button class = 'btn btn-outline-warning tel'>ÀüÈ­¹øÈ£</button>&nbsp;"
-                    + "<button type = button class = 'btn btn-outline-warning todo'>ÇÒ ÀÏ</button>"
-                    + "<button type = button class = 'btn btn-outline-warning homework'>¼÷Á¦</button>"
-                    + "<button type = button class = 'btn btn-outline-warning meeting'>È¸ÀÇ ÀÏÁ¤</button></div>";
+                    + "<button type = button class = 'btn btn-outline-warning tel'>ì „í™”ë²ˆí˜¸</button>&nbsp;"
+                    + "<button type = button class = 'btn btn-outline-warning todo'>í•  ì¼</button>"
+                    + "<button type = button class = 'btn btn-outline-warning homework'>ìˆ™ì œ</button>"
+                    + "<button type = button class = 'btn btn-outline-warning meeting'>íšŒì˜ ì¼ì •</button></div>";
 
                 var style = 'left: 100px; top: 100px; z-index: 1000;'
 
@@ -295,16 +295,16 @@
                             $(this).children().children().next().css("display", "none");
                         }
                     })
-                    // ÇÑ ¹ø¸¸ ½ÇÇàµÇ´Â textarea »ý¼º ÀÌº¥Æ®¸¦ .memobox Å¬·¡½º¿¡ Ãß°¡
+                    // í•œ ë²ˆë§Œ ì‹¤í–‰ë˜ëŠ” textarea ìƒì„± ì´ë²¤íŠ¸ë¥¼ .memobox í´ëž˜ìŠ¤ì— ì¶”ê°€
                     .one('click', findNewMemoBox, addTextArea)
 
-                    // ³ª¸ÓÁö ¾ÆÀÌÄÜµé¿¡ °¢°¢ ÀÌº¥Æ® Ãß°¡
+                    // ë‚˜ë¨¸ì§€ ì•„ì´ì½˜ë“¤ì— ê°ê° ì´ë²¤íŠ¸ ì¶”ê°€
                     .on('click', '.favorites', favoEventAdd)
                     .on('click', '.lock', lockEventAdd)
                     .on('click', '.delete', deleteEventAdd)
                     .on('click', '.close', recomCloseEventAdd)
 
-                    // ÃßÃµ Ã¢ ¹öÆ°¿¡ ÀÌº¥Æ® Ãß°¡
+                    // ì¶”ì²œ ì°½ ë²„íŠ¼ì— ì´ë²¤íŠ¸ ì¶”ê°€
                     .on('click', '.tel', telFormAdd)
                     .on('click', '.todo', todoFormAdd)
                     .on('click', '.homework', homeworkFormAdd)
@@ -321,17 +321,17 @@
                 memoContent.html(
                     "<div class = 'input-group recomList'>"
                     + "<div class = 'input-group-prepend'>"
-                    + "<span class = 'input-group-text'>ÀÌ¸§</span></div>"
+                    + "<span class = 'input-group-text'>ì´ë¦„</span></div>"
                     + "<input type ='text' name = 'name' class = 'form-control'/></div>"
                     + "<div class = 'input-group'>"
                     + "<div class ='input-group-prepend'>"
-                    + "<span class = 'input-group-text'>ÀüÈ­¹øÈ£</span></div>"
+                    + "<span class = 'input-group-text'>ì „í™”ë²ˆí˜¸</span></div>"
                     + "<input type ='text' name = 'tel' class = 'form-control'/></div>"
                     + "<div class = 'input-group'>"
                     + "<div class = 'input-group-prepend'>"
-                    + "<span class = 'input-group-text'>¸Þ¸ð</span></div>"
+                    + "<span class = 'input-group-text'>ë©”ëª¨</span></div>"
                     + "<textarea class = 'form-control' name = 'memo'/></textarea>"
-                    + "<button class = 'btn btn-outline-success'>ÀÔ·Â</button></div>"
+                    + "<button class = 'btn btn-outline-success'>ìž…ë ¥</button></div>"
                 )
             }
 
@@ -340,17 +340,17 @@
                 memoContent.html(
                     "<div class = 'input-group recomList'>"
                     + "<div class = 'input-group-prepend'>"
-                    + "<span class = 'input-group-text'>°ú¸ñ¸í</span></div>"
+                    + "<span class = 'input-group-text'>ê³¼ëª©ëª…</span></div>"
                     + "<input type ='text' class = 'form-control'/></div>"
                     + "<div class = 'input-group'>"
                     + "<div class ='input-group-prepend'>"
-                    + "<span class = 'input-group-text'>¾ðÁ¦±îÁö?</span></div>"
+                    + "<span class = 'input-group-text'>ì–¸ì œê¹Œì§€?</span></div>"
                     + "<input type ='text' class = 'form-control'/></div>"
                     + "<div class = 'input-group'>"
                     + "<div class = 'input-group-prepend'>"
-                    + "<span class = 'input-group-text'>¸Þ¸ð</span></div>"
+                    + "<span class = 'input-group-text'>ë©”ëª¨</span></div>"
                     + "<textarea class = 'form-control'/></textarea>"
-                    + "<button class = 'btn btn-outline-success'>ÀÔ·Â</button></div>"
+                    + "<button class = 'btn btn-outline-success'>ìž…ë ¥</button></div>"
                 )
             }
 
@@ -359,17 +359,17 @@
                 memoContent.html(
                     "<div class = 'input-group recomList'>"
                     + "<div class = 'input-group-prepend'>"
-                    + "<span class = 'input-group-text'>¾ðÁ¦?</span></div>"
+                    + "<span class = 'input-group-text'>ì–¸ì œ?</span></div>"
                     + "<input type ='text' class = 'form-control'/></div>"
                     + "<div class = 'input-group'>"
                     + "<div class ='input-group-prepend'>"
-                    + "<span class = 'input-group-text'>¾îµð¼­?</span></div>"
+                    + "<span class = 'input-group-text'>ì–´ë””ì„œ?</span></div>"
                     + "<input type ='text' class = 'form-control'/></div>"
                     + "<div class = 'input-group'>"
                     + "<div class = 'input-group-prepend'>"
-                    + "<span class = 'input-group-text'>¾î¶² È¸ÀÇ?</span></div>"
+                    + "<span class = 'input-group-text'>ì–´ë–¤ íšŒì˜?</span></div>"
                     + "<textarea class = 'form-control'/></textarea>"
-                    + "<button class = 'btn btn-outline-success'>ÀÔ·Â</button></div>"
+                    + "<button class = 'btn btn-outline-success'>ìž…ë ¥</button></div>"
                 )
             }
 
@@ -378,15 +378,15 @@
                 memoContent.html(
                     "<div class = 'input-group recomList'>"
                     + "<div class = 'input-group-prepend'>"
-                    + "<span class = 'input-group-text'>ÇÒ ÀÏ</span></div>"
+                    + "<span class = 'input-group-text'>í•  ì¼</span></div>"
                     + "<textarea class = 'form-control' rows = '5'></textarea>"
-                    + "<button class = 'btn btn-outline-success'>ÀÔ·Â</button></div>"
+                    + "<button class = 'btn btn-outline-success'>ìž…ë ¥</button></div>"
                 )
             }
         
-        // ¸Þ¸ð¹Ú½º Å¬¸¯ÇÏ¸é textarea¸¦ ¸Þ¸ð ³»¿¡ »ðÀÔÇÏ´Â ÇÔ¼ö
+        // ë©”ëª¨ë°•ìŠ¤ í´ë¦­í•˜ë©´ textareaë¥¼ ë©”ëª¨ ë‚´ì— ì‚½ìž…í•˜ëŠ” í•¨ìˆ˜
         function addTextArea(Event) {
-            //°´Ã¼ ³»¿¡ textarea°¡ ÇÏ³ªµµ ¾øÀ» ¶§¸¸ ½ÇÇàµÇµµ·Ï ÇÔ
+            //ê°ì²´ ë‚´ì— textareaê°€ í•˜ë‚˜ë„ ì—†ì„ ë•Œë§Œ ì‹¤í–‰ë˜ë„ë¡ í•¨
             if($(this).find($('textarea')).length == 0){
                 console.log(this.toString())
                 $(this).append("<textarea class = 'memotext form-control' style='overflow-y:hidden; resize:none'>")
@@ -399,7 +399,7 @@
                 $(this).children().children().next().css('display','none');
                 $(this).focusout(memoOutResize);
                 Event.preventDefault();
-                // ÀÌ ÀÌº¥Æ®´Â ºÎ¸ð°´Ã¼·Î ÀüÆÄµÇ¸é ¾ÈµÇ¹Ç·Î prevent½ÃÅ´
+                // ì´ ì´ë²¤íŠ¸ëŠ” ë¶€ëª¨ê°ì²´ë¡œ ì „íŒŒë˜ë©´ ì•ˆë˜ë¯€ë¡œ preventì‹œí‚´
                 }
             
             }
@@ -436,7 +436,7 @@
                 e.preventDefault();
             }
         
-        // ¸Þ¸ð ³»¿¡ Ãß°¡ÇÑ textarea Å©±â¿Í ¸Þ¸ðÀå Å©±â¸¦ ¸Þ¸ð ³»¿ë¿¡ ¸ÂÃç ÀÚµ¿À¸·Î ´Ã·ÁÁÖ°Å³ª ÁÙ¿©ÁÖ´Â ÇÔ¼ö
+        // ë©”ëª¨ ë‚´ì— ì¶”ê°€í•œ textarea í¬ê¸°ì™€ ë©”ëª¨ìž¥ í¬ê¸°ë¥¼ ë©”ëª¨ ë‚´ìš©ì— ë§žì¶° ìžë™ìœ¼ë¡œ ëŠ˜ë ¤ì£¼ê±°ë‚˜ ì¤„ì—¬ì£¼ëŠ” í•¨ìˆ˜
         function autoResizeTextArea() {
                 var NumberOfEnters = $(this).val().split("\n").length + 1;
                 if (NumberOfEnters == 1) {
@@ -460,29 +460,29 @@
             $(this).css('cursor', 'pointer');
             if ($(this).text().search('open') == 5)
                 $(this).text('lock');
-                //$.ajax µé¾î°¡¾ß ÇÔ (lockAdd)
+                //$.ajax ë“¤ì–´ê°€ì•¼ í•¨ (lockAdd)
             else
                 $(this).text('lock_open');
-                //$.ajax µé¾î°¡¾ß ÇÔ (lockDelete)
+                //$.ajax ë“¤ì–´ê°€ì•¼ í•¨ (lockDelete)
         }
 
         function favoEventAdd() {
             $(this).css('cursor', 'pointer');
             if ($(this).css('color') == "rgb(33, 37, 41)") {
                 $(this).addClass('onFavo');
-                //$.ajax µé¾î°¡¾ß ÇÔ (favoAdd °°Àº?)
+                //$.ajax ë“¤ì–´ê°€ì•¼ í•¨ (favoAdd ê°™ì€?)
             } else if ($(this).css('color') == "rgb(250, 128, 114)") {
                 $(this).removeClass('onFavo');
-                //$.ajax µé¾î°¡¾ß ÇÔ (favoDelete °°Àº)
+                //$.ajax ë“¤ì–´ê°€ì•¼ í•¨ (favoDelete ê°™ì€)
             }
         }
 
         function deleteEventAdd(e) {
                 $(this).css('cursor', 'pointer');
                // $(this).parent().parent().parent().css('display', 'none');
-               // -> ÀÌ ¹æ½ÄÀ¸·Î´Â ¼û±â±â¸¸ ÇÔ »èÁ¦´Â remove¸¦ »ç¿ëÇØ¾ß ÇÔ
+               // -> ì´ ë°©ì‹ìœ¼ë¡œëŠ” ìˆ¨ê¸°ê¸°ë§Œ í•¨ ì‚­ì œëŠ” removeë¥¼ ì‚¬ìš©í•´ì•¼ í•¨
                 $(this).parent().parent().parent().remove();
-                // ºÎ¸ð °´Ã¼±îÁö ÀÌº¥Æ®°¡ ½ÇÇàµÇÁö ¾Êµµ·Ï ¸·À½
+                // ë¶€ëª¨ ê°ì²´ê¹Œì§€ ì´ë²¤íŠ¸ê°€ ì‹¤í–‰ë˜ì§€ ì•Šë„ë¡ ë§‰ìŒ
                 e.preventDefault();
                 /* $.ajax({
                     memoMoveToTrash or memoDelete
@@ -504,49 +504,49 @@
             <tbody>
                 <tr class="first-row">
                     <td>WeMo</td>
-                    <td class="bg-primary">°øºÎ</td>
-                    <td class="bg-warning">¿îµ¿</td>
-                    <td class="bg-success">°¡°èºÎ</td>
-                    <td class="bg-danger">Ä¶¸°´õ</td>
-                    <td class="bg-secondary">º¸°üµÈ ¸Þ¸ð</td>
-                    <td class="bg-dark trash">ÈÞÁöÅë</td>
-                    <td class="bg-info">Åë°è</td>
+                    <td class="bg-primary">ê³µë¶€</td>
+                    <td class="bg-warning">ìš´ë™</td>
+                    <td class="bg-success">ê°€ê³„ë¶€</td>
+                    <td class="bg-danger">ìº˜ë¦°ë”</td>
+                    <td class="bg-secondary">ë³´ê´€ëœ ë©”ëª¨</td>
+                    <td class="bg-dark trash">íœ´ì§€í†µ</td>
+                    <td class="bg-info">í†µê³„</td>
                     <td class="bg-search">
-                        <span class="material-icons float-right" style = "line-height: 24pt;">search<span>&nbsp;
+                        <span class="material-icons float-right" style = "line-height: 24pt;">search</span>&nbsp;
                         <span><input type = "text" class = "search_input float-right"></span>
                     </td>
                 </tr>
             </tbody>
         </table>
     </nav>
-    <!-- ¸Þ¸ðÀå ÄÁÅ×ÀÌ³Ê ½ÃÀÛ -->
+    <!-- ë©”ëª¨ìž¥ ì»¨í…Œì´ë„ˆ ì‹œìž‘ -->
     <div class="memoContainer">
-        <!-- ÄÁÅ×ÀÌ³Ê ³» Ã¹¹øÂ° ¸Þ¸ð¹Ú½º -->
-        <!-- ¸Þ¸ð¹Ú½ºÀÇ À§Ä¡ ÁöÁ¤Àº ¿©±â¼­ style·Î ÁÖ¸é À§Ä¡°¡ ÁöÁ¤µÊ ¿¹½Ã ¡é -->
+        <!-- ì»¨í…Œì´ë„ˆ ë‚´ ì²«ë²ˆì§¸ ë©”ëª¨ë°•ìŠ¤ -->
+        <!-- ë©”ëª¨ë°•ìŠ¤ì˜ ìœ„ì¹˜ ì§€ì •ì€ ì—¬ê¸°ì„œ styleë¡œ ì£¼ë©´ ìœ„ì¹˜ê°€ ì§€ì •ë¨ ì˜ˆì‹œ â†“ -->
         <div class='container memobox shadow-sm' style = "position: absolute; left: 5px; top: 80px; z-index: 120">
             <form>
-                <!-- ¸Þ¸ð¹Ú½º »ó´Ü ¸Þ´º(³¯Â¥, Ä«Å×°í¸®, ¾ÆÀÌÄÜµé) -->
+                <!-- ë©”ëª¨ë°•ìŠ¤ ìƒë‹¨ ë©”ë‰´(ë‚ ì§œ, ì¹´í…Œê³ ë¦¬, ì•„ì´ì½˜ë“¤) -->
                 <div class='container memo-top'>
                     <span class="date"></span>
-                    <span class="section-name">°øºÎ</span>
+                    <span class="section-name">ê³µë¶€</span>
                     <span class="material-icons delete float-right">delete</span>
                     <span class='material-icons float-right favorites'>stars</span>
                     <span class="material-icons float-right lock">lock_open</span>
                 </div>
-                <!-- ¸Þ¸ð¹Ú½º ³» ÃßÃµ»óÀÚ -->
+                <!-- ë©”ëª¨ë°•ìŠ¤ ë‚´ ì¶”ì²œìƒìž -->
                 <div class='container recommend'>
-                    <span>È¤½Ã ¸Þ¸ðÀÇ ³»¿ëÀÌ ÀÌ°ÍÀÎ°¡¿ä?</span>
+                    <span>í˜¹ì‹œ ë©”ëª¨ì˜ ë‚´ìš©ì´ ì´ê²ƒì¸ê°€ìš”?</span>
                     <span class='material-icons close'> close </span>
                     <br>
-                    <button type=button class='btn btn-outline-warning tel'>ÀüÈ­¹øÈ£</button>
+                    <button type=button class='btn btn-outline-warning tel'>ì „í™”ë²ˆí˜¸</button>
                     &nbsp;
-                    <button type=button class='btn btn-outline-warning todo'>ÇÒ ÀÏ</button>
-                    <button type=button class='btn btn-outline-warning homework'>¼÷Á¦</button>
-                    <button type=button class='btn btn-outline-warning meeting'>È¸ÀÇ ÀÏÁ¤</button>
+                    <button type=button class='btn btn-outline-warning todo'>í•  ì¼</button>
+                    <button type=button class='btn btn-outline-warning homework'>ìˆ™ì œ</button>
+                    <button type=button class='btn btn-outline-warning meeting'>íšŒì˜ ì¼ì •</button>
                 </div>
-                <!-- ¸Þ¸ð¹Ú½º ³» ¸Þ¸ð ÄÁÅÙÃ÷ -->
+                <!-- ë©”ëª¨ë°•ìŠ¤ ë‚´ ë©”ëª¨ ì»¨í…ì¸  -->
                 <div class='container memoContent'>
-                <!-- ÀÌ ÀÚ¸®¿¡ textarea »ðÀÔµÊ -->
+                <!-- ì´ ìžë¦¬ì— textarea ì‚½ìž…ë¨ -->
                 </div>
             </form>
         </div>
@@ -555,20 +555,20 @@
             <form>
                 <div class='container memo-top'>
                     <span class="date"></span>
-                    <span class="section-name">¿îµ¿</span>
+                    <span class="section-name">ìš´ë™</span>
                     <span class='material-icons delete float-right'>delete</span>
                     <span class='material-icons float-right favorites'>stars</span>
                     <span class="material-icons float-right lock">lock_open</span>
                 </div>
                 <div class='container recommend'>
-                    <span>È¤½Ã ¸Þ¸ðÀÇ ³»¿ëÀÌ ÀÌ°ÍÀÎ°¡¿ä?</span>
+                    <span>í˜¹ì‹œ ë©”ëª¨ì˜ ë‚´ìš©ì´ ì´ê²ƒì¸ê°€ìš”?</span>
                     <span class='material-icons close'> close </span>
                     <br>
-                    <button type=button class='btn btn-outline-warning tel'>ÀüÈ­¹øÈ£</button>
+                    <button type=button class='btn btn-outline-warning tel'>ì „í™”ë²ˆí˜¸</button>
                     &nbsp;
-                    <button type=button class='btn btn-outline-warning todo'>ÇÒ ÀÏ</button>
-                    <button type=button class='btn btn-outline-warning homework'>¼÷Á¦</button>
-                    <button type=button class='btn btn-outline-warning meeting'>È¸ÀÇ ÀÏÁ¤</button>
+                    <button type=button class='btn btn-outline-warning todo'>í•  ì¼</button>
+                    <button type=button class='btn btn-outline-warning homework'>ìˆ™ì œ</button>
+                    <button type=button class='btn btn-outline-warning meeting'>íšŒì˜ ì¼ì •</button>
                 </div>
                 <div class='container memoContent'>
 
@@ -580,21 +580,21 @@
             <form>
                 <div class='container memo-top'>
                     <span class="date"></span>
-                    <span class="section-name">°¡°èºÎ</span>
+                    <span class="section-name">ê°€ê³„ë¶€</span>
                     <span class="material-icons delete float-right">delete</span>
                     <span class='material-icons float-right favorites'>stars</span>
                     <span class="material-icons float-right lock">lock_open</span>
                 </div>
                 <div class='container recommend'>
-                    <span>È¤½Ã ¸Þ¸ðÀÇ ³»¿ëÀÌ ÀÌ°ÍÀÎ°¡¿ä?</span>
+                    <span>í˜¹ì‹œ ë©”ëª¨ì˜ ë‚´ìš©ì´ ì´ê²ƒì¸ê°€ìš”?</span>
                     <span class='material-icons close'> close </span>
 
                     <br>
-                    <button type=button class='btn btn-outline-warning tel'>ÀüÈ­¹øÈ£</button>
+                    <button type=button class='btn btn-outline-warning tel'>ì „í™”ë²ˆí˜¸</button>
                     &nbsp;
-                    <button type=button class='btn btn-outline-warning todo'>ÇÒ ÀÏ</button>
-                    <button type=button class='btn btn-outline-warning homework'>¼÷Á¦</button>
-                    <button type=button class='btn btn-outline-warning meeting'>È¸ÀÇ ÀÏÁ¤</button>
+                    <button type=button class='btn btn-outline-warning todo'>í•  ì¼</button>
+                    <button type=button class='btn btn-outline-warning homework'>ìˆ™ì œ</button>
+                    <button type=button class='btn btn-outline-warning meeting'>íšŒì˜ ì¼ì •</button>
                 </div>
                 <div class='container memoContent'>
 
