@@ -15,10 +15,10 @@ public class MemoDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	public void firstInsert(Member member) {
+	public void firstInsert(String USER_EMAIL) {
 		// 회원 가입시 한 번만 입력되게 한다.
 		Memo memo= new Memo();
-		memo.setUSER_EMAIL(member.getUSER_EMAIL());	//회원 EMAIL
+		memo.setUSER_EMAIL(USER_EMAIL);	//회원 EMAIL
 		// memo.setMEMO_NUM => xml 에서 memo colum 최대값 찾아서 셋팅해줌
 		memo.setMEMO_SUB("STUDY");					//최초 STUDY
 		memo.setMEMO_POSITION("absolute");			//최초 style = position
@@ -55,16 +55,17 @@ public class MemoDAO {
 		sqlSession.insert("Memoes.newinsert",memo);
 	}
 	
-	public List<Memo> selectStudy(Member member) {
-		System.out.println(member.getUSER_EMAIL());
-		return sqlSession.selectList("Memoes.selectstudy", member);
+	public List<Memo> getSubmemo(Memo memo) {		
+		return sqlSession.selectList("Memoes.selectsub", memo);
 	}
 	
-	public List<Memo> selectMoney(Member member) {
-		return sqlSession.selectList("Memoes.selectmoney", member);
-	}
-	public List<Memo> selectHealth(Member member) {
-		return sqlSession.selectList("Memoes.selecthealth", member);
+	
+	
+	public int deleteMemo(Memo memo) {
+		int result =-1;
+		
+		 result = sqlSession.delete("Memoes.deletememo", memo);
+		return result;
 	}
 	
 	

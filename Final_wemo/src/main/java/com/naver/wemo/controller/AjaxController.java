@@ -36,27 +36,31 @@ public class AjaxController {
 
 	
 	@ResponseBody
-	@RequestMapping("/getStudy")
-	public List<Memo> getStudy(Member member) {
+	@RequestMapping("/sectionChange")
+	public List<Memo> sectionChange(Member member, HttpServletResponse resp) throws IOException {
 		
-		return memodao.selectStudy(member);
+		int result =memberdao.updateSection(member);
 		
+		if(result ==1) {
+			System.out.println("sectionChange성공!");
+			Memo memo = new Memo();
+			List<Memo> memolist =new ArrayList<Memo>();
+			memo.setMEMO_SUB(member.getUSER_SUB());
+			memo.setUSER_EMAIL(member.getUSER_EMAIL());
+			
+			memolist = memodao.getSubmemo(memo);
+			return memolist;
+			
+		}else {
+			PrintWriter out = resp.getWriter();
+			out.println("<script>alert('해당 메모들을 불러오는 데 실패했습니다'); return false;</script>");
+			out.close();
+			System.out.println("sectionChange실패!");
+		}
+		
+		return null;
 	}
-	@ResponseBody
-	@RequestMapping("/getMoney")
-	public List<Memo> getMoney(Member member) {
-		
-		return memodao.selectMoney(member);
-		
-	}
-	@ResponseBody
-	@RequestMapping("/getHealth")
-	public List<Memo> getHealth(Member member) {
-		
-		return memodao.selectHealth(member);
-		
-	}
-
+	
 	
 	@RequestMapping(value = "/login.net", method = RequestMethod.GET)
 	public String home() {
@@ -103,8 +107,7 @@ public class AjaxController {
 //			}
 //			response.addCookie(savecookie);
 			
-			out.println("alert('환영합니다! "+member.getUSER_EMAIL()+"님');");
-			out.println("");
+			out.println("alert('환영합니다! "+member.getUSER_EMAIL()+"님');");			
 			out.println("location.href='memo?USER_EMAIL="+id+"'");
 			out.println("</script>");
 			out.close();
@@ -128,25 +131,20 @@ public class AjaxController {
 	}
 	
 	@RequestMapping(value="/memo" , method= {RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView goMemo(@RequestParam(value="USER_EMAIL") String id,ModelAndView mv){//section 값 추가해서 ajax 이쪽으로 보내기 section 버튼 누를 시
+	public ModelAndView goMemo(@RequestParam(value="USER_EMAIL") String id,
+			@RequestParam(value="USER_SUB", defaultValue="STUDY") String USER_SUB,
+			ModelAndView mv){//section 값 추가해서 ajax 이쪽으로 보내기 section 버튼 누를 시
 		
-		Member member = new Member();
-		member.setUSER_EMAIL(id);
-		Member mem = memberdao.isId(member);//아이디 받아오기
+		Memo memo = new Memo();
+		memo.setUSER_EMAIL(id);	
+		memo.setMEMO_SUB(USER_SUB);
+		
 		List<Memo> memolist = new ArrayList<Memo>();
-		String lastsection = mem.getUSER_SUB();
-		
-			if(lastsection.equals("STUDY")) {
-				
-				memolist =memodao.selectStudy(mem);
-				System.out.println(memolist.get(0).getMEMO_TEX());
-			}else if(lastsection.equals("MONEY")) {
-				
-				memolist =memodao.selectMoney(mem);
-			}else if(lastsection.equals("HEALTH")) {
-				
-				memolist =memodao.selectHealth(mem);
-			}	
+		memolist = memodao.getSubmemo(memo);
+		if(memolist ==null) {
+			memodao.firstInsert(id);
+		}
+		String lastsection = memolist[0].getMEMO_SUB();		
 			
 			mv.addObject("USER_SUB", lastsection);
 			mv.addObject("memolist", memolist);
@@ -200,6 +198,17 @@ public class AjaxController {
 	@GetMapping(value="/newMemo")
 	public void newMemo(Memo memo) {
 		memodao.newInsert(memo);
+	}
+	
+	@ResponseBody
+	@GetMapping(value="/memoDel")
+	public void memoDel(Memo memo) {
+		int result = memodao.deleteMemo(memo);
+		if(result ==1) {
+			System.out.println("삭제성공");
+		}else {
+			System.out.println("삭제실패");
+		}
 	}
 	
 

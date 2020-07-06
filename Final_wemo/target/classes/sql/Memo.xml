@@ -46,20 +46,18 @@
 	
 	
 	
-	<select id="selectstudy" parameterType="member" resultType="memo">
+	<select id="selectsub" parameterType="member" resultType="memo">
 		select * from memo
-			 where MEMO_SUB='STUDY' AND USER_EMAIL=#{USER_EMAIL}
+			 where MEMO_SUB=#{USER_SUB} AND USER_EMAIL=#{USER_EMAIL}
 	</select>
 	
-	<select id="selctmoney"  parameterType="member" resultType="memo">
-		select * from memo
-			where MEMO_SUB='MONEY' AND USER_EMAIL=#{USER_EMAIL}
-	</select>
 	
-	<select id="selcthealth"  parameterType="member" resultType="memo">
-		select * from memo
-			where MEMO_SUB='HEALTH' AND USER_EMAIL=#{USER_EMAIL}
-	</select>
+	
+	<delete id="deletememo" parameterType="memo">
+		 delete memo where memo_num = #{MEMO_NUM} AND USER_EMAIL=#{USER_EMAIL}
+	</delete>
+	
+	
 	
 	
 	

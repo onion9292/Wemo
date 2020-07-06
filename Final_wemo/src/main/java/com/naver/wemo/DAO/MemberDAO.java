@@ -21,12 +21,21 @@ public class MemberDAO {
 			member.setUSER_NICK(member.getUSER_EMAIL());//처음 닉네임은 ID
 			member.setUSER_FORM("STUDY");
 			sqlSession.insert("Members.insert", member);//회원정보 입력
-			memodao.firstInsert(member);//처음 메모 입력				
+			memodao.firstInsert(member);//처음 메모 입력			
 		}
 
 	
 	public Member isId(Member member) {
 		return sqlSession.selectOne("Members.idcheck",member);
+	}
+	
+	public int updateSection(Member member) {
+		int result = -1;
+		System.out.println(member.getUSER_SUB());
+		System.out.println(member.getUSER_EMAIL());
+		result = sqlSession.update("Members.updateSection", member);
+	
+		return result;
 	}
 	
 }

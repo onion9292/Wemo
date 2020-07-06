@@ -173,6 +173,8 @@
             })
                         .css('cursor', 'pointer');
             }
+            
+			
         })
 
         function navbarAddEvent(){
@@ -192,18 +194,64 @@
                 console.log(secondSpanColValue);
                 if($('.second-row'))
                     $('.second-row').last().remove();
-                $('.first-row').after("<tr class = 'second-row'><td colspan='"+firstSpanColValue+"'></td><td class = '"+bgColorClass+"'></td><td colspan = '"+secondSpanColValue+"'</td></tr>")
+                $('.first-row').after("<tr class = 'second-row'><td  colspan='"+firstSpanColValue+"'></td><td class = '"+bgColorClass+"'>+</td><td colspan = '"+secondSpanColValue+"'</td></tr>")
                                 
                 $('.second-row td').css({
                     "border-collapse" : "collapse", 
                     "border" : "none",
                     "border-collapse" : "collapse",
-                    "border-radius" : "0% 0% 5% 5%"
-                })
-                
+                    "border-radius" : "0% 0% 5% 5%"                    
+                }).on('click',newMemoAppend);
+                $('.first-row').next().css("cursor","pointer");
                 //이 부분 만들어졌을 시 선택된 nav 영역 클릭시 메모 생성 및 $('#subject').text() = this.text();(선택한 text 입력)
+                
+                var subject = $(this).text();
+                var user =$('#user').text();
+                
+            	console.log(user);
+            		if(subject =="공부"){
+            			$('#subject').text('STUDY');
+            			
+            		}else if(subject =="운동"){
+            			$('#subject').text('HEALTH');
+            			
+            		}else if(subject =="가계부"){
+            			$('#subject').text('MONEY');
+            			
+            		}
+            		
+            		$.ajax({
+        				url : "sectionChange",
+        				data : {
+        					"USER_EMAIL" : user,
+        					"USER_SUB" : subject
+        				},
+        				success : function(rdata){
+        					$('.memoContainer').children().remove();
+        					//ajax 사용 memo 뿌리는 함수 만들기!!!!!!!
+        					$.each(rdata,function(index,e){
+    						var memoEach = rdata[index];
+    						var addmemo = "<div class = 'section section-"+subject +"' ><form>"
+                 				+ "<div class = 'container memobox shadow-sm' style=' position : "+memoEach.MEMO_POSITION
+    							+ "; top:"+memoEach.MEMO_TOP+"; left:"+memoEach.MEMO_LEFT+"; z-index:"+memoEach.MEMO_ZIN+"'>"
+                  		  	 	+ "<div class = 'container memo-top'>"
+                		        + "<span class = 'date'></span>"
+                 		       + "<span class = 'memo-num'>"+memoEach.MEMO_NUM+"</span>"                
+                        + "<span class = 'material-icons delete float-right'>delete</span>"
+                        + "<span class = 'material-icons float-right favorites'>stars</span>"
+                        + "<span class = 'material-icons float-right lock'>lock_open</span></div>"                
+                     	+ "<div class='container memoSubject'>"+memoEach.MEMO_SUB+"</div>"                       
+                     	+ "<textarea class = 'memotext form-control' style ='overflow-y:hidden; resize:none; background-color:khaki; border:none;'>"+memoEach.MEMO_TEX
+                     	+"</textarea></div></form></div>" 
+                     	
+                     	$('.memoContainer').append(addmemo);	
+        				}
+        			})//ajax end;
                 })
+               
             }
+        	
+        	
         })
         }
         
@@ -218,7 +266,9 @@
             $('.date').text(today);
 
              /* newMemo(네비게이션 바 내에 공부/운동/캘린더 탭)클릭시 새 메모를 생성 */
-            $('.newMemo').on('click', newMemoAppend);
+            $('.newMemo').on('click', newMemoAppend)
+            				.css('cursor','pointer');
+            
 
              /* 처음 들어왔을 때 페이지에 존재하는 모든 메모에 이벤트 부여 */
             $('.close').on('click', recomCloseEventAdd);
@@ -238,8 +288,11 @@
                     var memoWidth = $(this).width();
                     var memoHeight = $(this).height();
                     if (memoHeight < 220 || memoWidth < 220) {
-                        $(this).children().children().next().css("display", "none");
-                    } 
+                    	  $(this).children().children().next().css('display','none');
+                     }else{
+                       	 $(this).children().children().next().css("display", "inline-block");
+                     }
+                     
                 })
                  /* 메모박스가 너무 작아지면 추천창이 자동으로 사라지도록 설계 */
                 .one('click', addTextArea)
@@ -285,12 +338,11 @@
 
                 var newMemobox = "<div class = 'container memobox shadow-sm' style = "+style+"><form>"
                     + "<div class = 'container memo-top'><span class = 'date'>" + today
-                    + "</span><span class = 'section-name'> " + this.text + "</span>"
                     + "<span class = 'material-icons delete float-right'>delete</span>"
                     + "<span class = 'material-icons favorites float-right'>stars</span>"
                     + "<span class = 'material-icons float-right lock'>lock_open</span></div>"
                     + recommendContainer
-                    + "<div class = 'container memoContent'></div></form></div>";
+                    + "<textarea class = 'memotext form-control' style ='overflow-y:hidden; resize:none; background-color:khaki; border:none;'></textarea>";
 
                 $('.memoContainer').append(newMemobox);
 
@@ -302,9 +354,12 @@
                     .resize(function (e) {
                         var memoWidth = $(this).width();
                         var memoHeight = $(this).height();
-                        if (memoHeight < 220 || memoWidth < 220) {
-                            $(this).children().children().next().css("display", "none");
+                        if ( memoHeight < 220 || memoWidth < 220) {
+                            $(this).children().children().next().css('display','none');
+                        }else{
+                       	 $(this).children().children().next().css("display", "inline-block");
                         }
+
                     })
                     // 한 번만 실행되는 textarea 생성 이벤트를 .memobox 클래스에 추가
                     .one('click', findNewMemoBox, addTextArea)
@@ -512,10 +567,22 @@
                // -> 이 방식으로는 숨기기만 함 삭제는 remove를 사용해야 함
                 $(this).parent().parent().parent().remove();
                 // 부모 객체까지 이벤트가 실행되지 않도록 막음
-                e.preventDefault();
-                /* $.ajax({
-                    memoMoveToTrash or memoDelete
-                })*/
+               
+                var memo_num  = $(this).prev().text();
+                var user = $('#user').text();                
+                $.ajax({
+                	url :"memoDel",
+                	data :{
+                		"MEMO_NUM" : memo_num,
+                		"USER_EMAIL" : user
+                		},
+                	success : function(){
+                		$(this).parant().parant().parant().parant().empty();
+                		 e.preventDefault();
+                	}
+                	
+                })
+                
             }
 
         function recomCloseEventAdd() {
@@ -523,6 +590,40 @@
             var recommend = $(this).parent();
             recommend.css("display", "none");
         }
+        
+        function getMemoEvent(user,subject){       	 
+        	$.ajax({
+        		url :"getMemo",
+        		data :{
+        			"USER_EMAIL": user,
+        			"USER_SUB" : subject
+        		},
+        		success : function(memolist){
+        			$.each(memolist,function(index,e){
+        				var memoEach = memolist[index];
+        				var addmemo = "<div class = 'section section-"+subject +"' ><form>"
+                     		+ "<div class = 'container memobox shadow-sm' style=' position : "+memoEach.MEMO_POSITION
+        					+ "; top:"+memoEach.MEMO_TOP+"; left:"+memoEach.MEMO_LEFT+"; z-index:"+memoEach.MEMO_ZIN+"'>"
+                         	+ "<div class = 'container memo-top'>"
+                            + "<span class = 'date'></span>"
+                            + "<span class = 'memo-num'>"+memoEach.MEMO_NUM+"</span>"                
+                            + "<span class = 'material-icons delete float-right'>delete</span>"
+                            + "<span class = 'material-icons float-right favorites'>stars</span>"
+                            + "<span class = 'material-icons float-right lock'>lock_open</span></div>"                
+                         	+ "<div class='container memoSubject'>"+memoEach.MEMO_SUB+"</div>"                       
+                         	+ "<textarea class = 'memotext form-control' style ='overflow-y:hidden; resize:none; background-color:khaki; border:none;'>"+memoEach.MEMO_TEX
+                         	+"</textarea></div></form></div>" 
+                         	
+                         	$('.memoContainer').append(addmemo);	
+        			})//each end
+        		}//success end
+        	})//ajax end
+        		
+       
+        	
+        	
+        	
+        }; //getMemoEvent end
     })
     </script>
 </head>
@@ -541,8 +642,9 @@
                     <td class="bg-danger">캘린더</td>
                     <td class="bg-secondary">보관된 메모</td>
                     <td class="bg-dark trash">휴지통</td>
-                    <td class="bg-info">통계</td>
+                    <td class="bg-info">통계</td>                    
                     <td class="bg-search">
+                    
                         <span class="material-icons float-right" style = "line-height: 24pt;">search</span>&nbsp;
                         <span><input type = "text" class = "search_input float-right"></span>
                     </td>
@@ -553,18 +655,18 @@
     <!-- 메모장 컨테이너 시작 -->
     <div class="memoContainer">
       <c:forEach var ="memo" items="${memolist }"> 
-   		<div class = 'section section-${memo.MEMO_SUB }' >
+   		<div class = 'section section-${memo.MEMO_SUB } ' >
         <form>
         	<div class = 'container memobox shadow-sm' style=" position : ${memo.MEMO_POSITION} ; top:${memo.MEMO_TOP}; left:${memo.MEMO_LEFT}; z-index:${memo.MEMO_ZIN}">
             <div class = 'container memo-top'>
                 <span class = "date"></span>
-                <span class = "section-name" style="display:none">${memo.MEMO_SUB }</span>
+                <span class = "memo-num">${memo.MEMO_NUM }</span>                
                 <span class = "material-icons delete float-right">delete</span>
                 <span class = 'material-icons float-right favorites'>stars</span>
                 <span class = "material-icons float-right lock">lock_open</span>                
             </div>
             <div class="container memoSubject">${memo.MEMO_SUB }</div>                       
-            <div class = 'container memoContent'>${memo.MEMO_TEX }</div>
+            <textarea class = 'memotext form-control' style ='overflow-y:hidden; resize:none; background-color:khaki; border:none;'>${memo.MEMO_TEX }</textarea>
             </div>
             </form>
         </div>

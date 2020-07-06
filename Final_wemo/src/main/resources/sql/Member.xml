@@ -13,4 +13,10 @@
 	<select id="idcheck" parameterType="string" resultType="member">
 		select * from member where USER_EMAIL= #{USER_EMAIL}
 	</select>
+	
+	<update id="updateSection" parameterType="member">
+		update member
+		set USER_SUB = #{USER_SUB}
+		where USER_EMAIL = #{USER_EMAIL}
+	</update>
 </mapper>
