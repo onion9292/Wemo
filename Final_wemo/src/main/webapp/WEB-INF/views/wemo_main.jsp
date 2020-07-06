@@ -225,28 +225,72 @@
         				data : {
         					"USER_EMAIL" : user,
         					"USER_SUB" : subject
-        				},
+        				},        				
         				success : function(rdata){
         					$('.memoContainer').children().remove();
         					//ajax 사용 memo 뿌리는 함수 만들기!!!!!!!
         					$.each(rdata,function(index,e){
+        					
+        						console.log(rdata[index][index]+" haha");
     						var memoEach = rdata[index];
-    						var addmemo = "<div class = 'section section-"+subject +"' ><form>"
-                 				+ "<div class = 'container memobox shadow-sm' style=' position : "+memoEach.MEMO_POSITION
-    							+ "; top:"+memoEach.MEMO_TOP+"; left:"+memoEach.MEMO_LEFT+"; z-index:"+memoEach.MEMO_ZIN+"'>"
+    						var addmemo = "<div class = 'section section-"+memoEach.memo_SUB +"' ><form>"
+                 				+ "<div class = 'container memobox shadow-sm' style=' position : "+memoEach.memo_POSITION
+    							+ "; top:"+memoEach.memo_TOP+"; left:"+memoEach.memo_LEFT+"; z-index:"+memoEach.memo_ZIN+"'>"
                   		  	 	+ "<div class = 'container memo-top'>"
                 		        + "<span class = 'date'></span>"
-                 		       + "<span class = 'memo-num'>"+memoEach.MEMO_NUM+"</span>"                
+                 		       + "<span class = 'memo-num'>"+memoEach.memo_NUM+"</span>"                
                         + "<span class = 'material-icons delete float-right'>delete</span>"
                         + "<span class = 'material-icons float-right favorites'>stars</span>"
                         + "<span class = 'material-icons float-right lock'>lock_open</span></div>"                
-                     	+ "<div class='container memoSubject'>"+memoEach.MEMO_SUB+"</div>"                       
-                     	+ "<textarea class = 'memotext form-control' style ='overflow-y:hidden; resize:none; background-color:khaki; border:none;'>"+memoEach.MEMO_TEX
+                     	+ "<div class='container memoSubject'>"+memoEach.memo_SUB+"</div>"                       
+                     	+ "<textarea class = 'memotext form-control' style ='overflow-y:hidden; resize:none; background-color:khaki; border:none;'>"+memoEach.memo_TEX
                      	+"</textarea></div></form></div>" 
                      	
-                     	$('.memoContainer').append(addmemo);	
-        				}
-        			})//ajax end;
+                     	$('.memoContainer').append(addmemo);
+                     	
+                     	$('.close').on('click', recomCloseEventAdd);
+                        $('.lock').on('click', lockEventAdd);
+                        $('.favorites').on('click', favoEventAdd);           
+                        $('.delete').on('click', deleteEventAdd);
+
+                         /* 메모박스를 드래그가 가능한 객체로 변경하는 함수 draggable() @jQueryUI.js */
+                        $('.memobox').draggable()
+                            .resizable({
+                                minWidth: 200,
+                                maxWidth: 500,
+                                minHeight: 130
+                            })
+                             /* 메모 리사이즈 가능한 최소치 최대치 설정 */
+                            .resize(function (e) {
+                                var memoWidth = $(this).width();
+                                var memoHeight = $(this).height();
+                                if (memoHeight < 220 || memoWidth < 220) {
+                                	  $(this).children().children().next().css('display','none');
+                                 }else{
+                                   	 $(this).children().children().next().css("display", "inline-block");
+                                 }
+                                 
+                            })
+                             /* 메모박스가 너무 작아지면 추천창이 자동으로 사라지도록 설계 */
+                            .one('click', addTextArea)
+                             /* 메모박스 내에 삽입되는 textarea는 단 한 번만 실행되도록 on()이 아닌 one()으로 이벤트 부여 */
+                            .mouseup(adjustMemoboxzindex)                     
+                            .mousedown(function(e){
+                                $(this).css("z-index", 1000);
+                                // mousedown 했을 때 ajax를 통해서 memo 위치값 update
+                            }) // mousedown end
+
+                        $('.memotext').keydown(autoResizeTextArea);
+                        $('.memotext').focusout(memoOutResize);
+
+                         /* 추천박스 내에 있는 태그에 각각 폼 구현 -> 수정예정 */
+                       // $('.tel').on('click', telFormAdd)
+                        //$('.todo').on('click', todoFormAdd)
+                        // $('.homework').on('click', homeworkFormAdd)
+                       // $('.meeting').on('click', meetingFormAdd)
+        				})
+        			}
+            		})//ajax end;
                 })
                
             }

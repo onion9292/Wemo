@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -39,16 +38,23 @@ public class AjaxController {
 	@RequestMapping("/sectionChange")
 	public List<Memo> sectionChange(Member member, HttpServletResponse resp) throws IOException {
 		
-		int result =memberdao.updateSection(member);
-		
+		int result =memberdao.updateSection(member);		
 		if(result ==1) {
 			System.out.println("sectionChange성공!");
 			Memo memo = new Memo();
 			List<Memo> memolist =new ArrayList<Memo>();
-			memo.setMEMO_SUB(member.getUSER_SUB());
 			memo.setUSER_EMAIL(member.getUSER_EMAIL());
-			
-			memolist = memodao.getSubmemo(memo);
+			memo.setMEMO_SUB(member.getUSER_SUB());
+			if(member.getUSER_SUB().equals("공부")) {
+				memo.setMEMO_SUB("STUDY");
+			}else if(member.getUSER_SUB().equals("운동")) {
+				memo.setMEMO_SUB("HEALTH");
+			}else if(member.getUSER_SUB().equals("가계부")) {
+				memo.setMEMO_SUB("MONEY");
+			}
+					
+			memolist =memodao.getSubmemo( memo.getUSER_EMAIL(),memo.getMEMO_SUB());
+
 			return memolist;
 			
 		}else {
@@ -139,12 +145,13 @@ public class AjaxController {
 		memo.setUSER_EMAIL(id);	
 		memo.setMEMO_SUB(USER_SUB);
 		
+		
 		List<Memo> memolist = new ArrayList<Memo>();
-		memolist = memodao.getSubmemo(memo);
+		memolist = memodao.getSubmemo(id,USER_SUB);
 		if(memolist ==null) {
 			memodao.firstInsert(id);
 		}
-		String lastsection = memolist[0].getMEMO_SUB();		
+		String lastsection = memolist.get(0).getMEMO_SUB();		
 			
 			mv.addObject("USER_SUB", lastsection);
 			mv.addObject("memolist", memolist);

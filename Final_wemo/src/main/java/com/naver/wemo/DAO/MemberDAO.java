@@ -21,7 +21,7 @@ public class MemberDAO {
 			member.setUSER_NICK(member.getUSER_EMAIL());//처음 닉네임은 ID
 			member.setUSER_FORM("STUDY");
 			sqlSession.insert("Members.insert", member);//회원정보 입력
-			memodao.firstInsert(member);//처음 메모 입력			
+			memodao.firstInsert(member.getUSER_EMAIL());//처음 메모 입력			
 		}
 
 	

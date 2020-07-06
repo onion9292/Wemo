@@ -46,7 +46,7 @@
 	
 	
 	
-	<select id="selectsub" parameterType="member" resultType="memo">
+	<select id="selectsub" parameterType="Member" resultType="memo">
 		select * from memo
 			 where MEMO_SUB=#{USER_SUB} AND USER_EMAIL=#{USER_EMAIL}
 	</select>

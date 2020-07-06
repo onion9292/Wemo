@@ -40,4 +40,6 @@ insert into member values('admin@admin.net','1','STUDY','NONE','admin','STUDY');
 select*from member;
 select*from memo;
 
+select*from memo where MEMO_SUB ='STUDY' AND USER_EMAIL='se1';
+
 

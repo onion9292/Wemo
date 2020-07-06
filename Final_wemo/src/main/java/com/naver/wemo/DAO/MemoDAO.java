@@ -1,7 +1,7 @@
 package com.naver.wemo.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +55,17 @@ public class MemoDAO {
 		sqlSession.insert("Memoes.newinsert",memo);
 	}
 	
-	public List<Memo> getSubmemo(Memo memo) {		
-		return sqlSession.selectList("Memoes.selectsub", memo);
+	public List<Memo> getSubmemo(String USER_EMAIL, String USER_SUB) {
+		Member member = new Member();
+		member.setUSER_EMAIL(USER_EMAIL);
+		member.setUSER_SUB(USER_SUB);
+		System.out.println("USER_EMAIL : "+USER_EMAIL);
+		System.out.println("USER_SUB : "+USER_SUB);
+		List<Memo> memolist = new ArrayList<Memo>();
+				
+		memolist = sqlSession.selectList("Memoes.selectsub", member);
+		System.out.println("memolist.size() from getSubmemo : " + memolist.size());
+		return memolist;
 	}
 	
 	
